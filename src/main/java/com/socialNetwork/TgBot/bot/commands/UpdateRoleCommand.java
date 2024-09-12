@@ -22,12 +22,12 @@ public class UpdateRoleCommand implements IBotCommand {
 
     @Override
     public String getCommandIdentifier() {
-        return "change role";
+        return "change_role";
     }
 
     @Override
     public String getDescription() {
-        return "changes role of the user";
+        return "changes_role_of_the_user";
     }
 
     @Override
