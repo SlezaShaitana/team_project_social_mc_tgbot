@@ -34,14 +34,14 @@ public class UpdateRoleCommand implements IBotCommand {
     public void processMessage(AbsSender absSender, Message message, String[] strings) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(message.getChatId().toString());
-        sendMessage.setText("please enter your email)");
-        Optional<User> user = userRepository.findByEmail(strings[0]);
+        sendMessage.setText("GOOFY@gmail.com");
+        Optional<User> user = userRepository.findByEmail(sendMessage.getText());
         if (user.isPresent()) {
             User userFound = user.get();
-            userFound.setRoles(List.of(Role.valueOf(strings[1])));
+            userFound.setRoles(List.of(Role.valueOf(strings[0])));
             userRepository.save(userFound);
+            sendMessage.setText("Role has been changed for the user)");
         }
-        sendMessage.setText("User with this email is not found");
         try {
             absSender.execute(sendMessage);
         } catch (TelegramApiException e) {

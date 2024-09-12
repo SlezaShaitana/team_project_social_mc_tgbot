@@ -2,6 +2,7 @@ spring:
   application:
     name: TgBot
 
+
   datasource:
    url: jdbc:postgresql://localhost:5435/mc_auth
    username: postgres
