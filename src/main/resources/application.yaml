@@ -6,3 +6,11 @@ telegram:
   bot:
     username: SocialNetwork49Bot
     token: 7344453862:AAGI8I3lxFtmxF_6S5XGtV-VaBZvCtH1axI
+
+  datasource:
+    url: jdbc:postgresql://postgres_db/mc_auth
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+
