@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AuthenticationService {
+public class AuthenticationService  {
 
 
     private final AuthClient authClient;
@@ -26,19 +26,19 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
 
-    public AuthenticateResponseDto login(AuthenticateDto authenticateDto, HttpServletResponse response) {
-
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticateDto.getEmail(), authenticateDto.getPassword()));
-        User user = userService.getByEmail(authenticateDto.getEmail());
-        var jwt = jwtService.generateToken(user);
-        var refreshToken = refreshTokenService.generateRefreshTokenByUserId(user.getId());
-        Cookie cookie = new Cookie("Refresh_token", refreshToken.getToken());
-        Cookie cookie2 = new Cookie("Access_token", jwt);
-        response.addCookie(cookie);
-        response.addCookie(cookie2);
-        response.addHeader("Authorization", "Bearer " + jwt);
-        return new AuthenticateResponseDto(jwt, refreshToken.getToken());
-    }
+//    public AuthenticateResponseDto login(AuthenticateDto authenticateDto, HttpServletResponse response) {
+//
+//        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticateDto.getEmail(), authenticateDto.getPassword()));
+//        User user = userService.getByEmail(authenticateDto.getEmail());
+//        var jwt = jwtService.generateToken(user);
+//        var refreshToken = refreshTokenService.generateRefreshTokenByUserId(user.getId());
+//        Cookie cookie = new Cookie("Refresh_token", refreshToken.getToken());
+//        Cookie cookie2 = new Cookie("Access_token", jwt);
+//        response.addCookie(cookie);
+//        response.addCookie(cookie2);
+//        response.addHeader("Authorization", "Bearer " + jwt);
+//        return new AuthenticateResponseDto(jwt, refreshToken.getToken());
+//    }
 
 
 }
