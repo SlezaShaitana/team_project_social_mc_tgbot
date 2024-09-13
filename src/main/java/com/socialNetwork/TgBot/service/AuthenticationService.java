@@ -40,5 +40,10 @@ public class AuthenticationService  {
 //        return new AuthenticateResponseDto(jwt, refreshToken.getToken());
 //    }
 
+    // пример
+    private AuthenticateResponseDto get(){
+        AuthenticateDto authenticateDto = new AuthenticateDto();
+        return authClient.login(authenticateDto);
+    }
 
 }
