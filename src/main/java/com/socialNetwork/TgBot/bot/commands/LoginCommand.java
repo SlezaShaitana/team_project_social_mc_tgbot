@@ -13,8 +13,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 @Service
 @RequiredArgsConstructor
-public class loginCommand implements IBotCommand {
-
+public class LoginCommand implements IBotCommand {
 
     private final AuthClient authClient;
 
