@@ -34,7 +34,7 @@ public class UpdateRoleCommand implements IBotCommand {
     public void processMessage(AbsSender absSender, Message message, String[] strings) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(message.getChatId().toString());
-        sendMessage.setText("GOOFY@gmail.com");
+        sendMessage.setText("pepethefrog@gmail.com");
         Optional<User> user = userRepository.findByEmail(sendMessage.getText());
         if (user.isPresent()) {
             User userFound = user.get();
