@@ -27,7 +27,7 @@ public class StartCommand implements IBotCommand {
     public void processMessage(AbsSender absSender, Message message, String[] strings) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(message.getChatId().toString());
-        sendMessage.setText("Enter login and password");
+        sendMessage.setText("Welcome to our Code Lounge Tg version to login call the command /login");
         try {
             absSender.execute(sendMessage);
         } catch (TelegramApiException e) {
