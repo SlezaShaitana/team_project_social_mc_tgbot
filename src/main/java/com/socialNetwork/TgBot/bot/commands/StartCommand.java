@@ -27,7 +27,11 @@ public class StartCommand implements IBotCommand {
     public void processMessage(AbsSender absSender, Message message, String[] strings) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(message.getChatId().toString());
-        sendMessage.setText("/change_role "+"`(`Your Role`)`");
+        sendMessage.setText("""
+        Приветствуем тебя в мобильной версии Code Lounge!
+        Для начала, войди в свой аккаунт.
+        Вызови команду /login
+        """);
         try {
             absSender.execute(sendMessage);
         } catch (TelegramApiException e) {

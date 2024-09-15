@@ -2,8 +2,6 @@ spring:
   application:
     name: TgBot
 
-
-
 telegram:
   bot:
     username: SocialNetwork49Bot

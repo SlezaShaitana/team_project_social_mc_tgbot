@@ -1,8 +1,9 @@
 package com.socialNetwork.TgBot.bot.commands;
 
-import com.socialNetwork.TgBot.client.AuthClient;
-import com.socialNetwork.TgBot.dto.AuthenticateDto;
+import com.socialNetwork.TgBot.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.IBotCommand;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -15,7 +16,8 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 @RequiredArgsConstructor
 public class LoginCommand implements IBotCommand {
 
-    private final AuthClient authClient;
+    private static final Logger log = LoggerFactory.getLogger(LoginCommand.class);
+    private final AuthService authService;
 
     @Override
     public String getCommandIdentifier() {
@@ -24,17 +26,21 @@ public class LoginCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "changes_role_of_the_user";
+        return "Login user";
     }
 
     @Override
     public void processMessage(AbsSender absSender, Message message, String[] strings) {
-        AuthenticateDto authenticateDto = new AuthenticateDto();
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(message.getChatId().toString());
-        authenticateDto.setEmail(strings[0]);
-        authenticateDto.setPassword(strings[1]);
-        authClient.login(authenticateDto);
+
+        if (authService.login(strings[0], strings[1])) {
+            sendMessage.setText("Вы успешно вошли в аккаунт!");
+            log.info("Пользователь успешно вошел в аккаунт");
+        } else {
+            sendMessage.setText("Пароль или логин неверный! \nПопробуйте снова");
+            log.info("Пользователь не прошел аутенфикацию");
+        }
         try {
             absSender.execute(sendMessage);
         } catch (TelegramApiException e) {

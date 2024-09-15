@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(value = "auth",
-        url = "http://79.174.80.200:8086/api/v1/auth")
+@FeignClient(value = "auth", url = "http://79.174.80.200:8086/api/v1/auth")
 public interface AuthClient {
 
     @PostMapping("/login")
