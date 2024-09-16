@@ -27,6 +27,7 @@ public class RedisConfig {
 
         redisTemplate.setConnectionFactory(lettuceConnectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new StringRedisSerializer());
 
         return redisTemplate;
     }

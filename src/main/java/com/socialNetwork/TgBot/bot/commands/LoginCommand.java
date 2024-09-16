@@ -38,7 +38,7 @@ public class LoginCommand implements IBotCommand {
             log.info("Пользователь успешно вошел в аккаунт");
         } else {
             sendMessage.setText("Пароль или логин неверный! \nПопробуйте снова");
-            log.info("Пользователь не прошел аутенфикацию");
+            log.info("Пользователь не прошел аутентификацию");
         }
         try {
             absSender.execute(sendMessage);

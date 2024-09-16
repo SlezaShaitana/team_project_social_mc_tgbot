@@ -30,7 +30,7 @@ public class StartCommand implements IBotCommand {
         sendMessage.setText("""
         Приветствуем тебя в мобильной версии Code Lounge!
         Для начала, войди в свой аккаунт.
-        Вызови команду /login
+        Вызови команду /login {email} {password}
         Для удаления account.
         Вызови команду /delete
         """);

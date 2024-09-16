@@ -22,15 +22,24 @@ public class AuthService {
         AuthenticateDto authenticateDto = new AuthenticateDto();
         authenticateDto.setEmail(email);
         authenticateDto.setPassword(password);
+
         AuthenticateResponseDto responseDto = null;
         try {
             responseDto = authClient.login(authenticateDto);
-            redisTemplate.opsForValue().set(String.valueOf(userId), responseDto.getAccessToken(), 3600000);
+            String accessToken = responseDto.getAccessToken();
+            setToken(userId, accessToken);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
 
         return responseDto != null;
+    }
+
+    private void setToken(Long userId, String accessToken) {
+        if (getToken(userId) != null) {
+            redisTemplate.delete(String.valueOf(userId));
+        }
+        redisTemplate.opsForValue().set(String.valueOf(userId), accessToken);
     }
 
     public String getToken(Long userId) {
