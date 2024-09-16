@@ -19,7 +19,6 @@ public class AuthService {
         AuthenticateDto authenticateDto = new AuthenticateDto();
         authenticateDto.setEmail(email);
         authenticateDto.setPassword(password);
-
         AuthenticateResponseDto responseDto = null;
         try {
             responseDto = authClient.login(authenticateDto);

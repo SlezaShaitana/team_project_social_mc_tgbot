@@ -1,6 +1,7 @@
 package com.socialNetwork.TgBot.bot.commands;
 
 import com.socialNetwork.TgBot.service.AuthService;
+import com.socialNetwork.TgBot.service.TokenBotService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,8 @@ public class LoginCommand implements IBotCommand {
     private static final Logger log = LoggerFactory.getLogger(LoginCommand.class);
     private final AuthService authService;
 
+    private final TokenBotService tokenBotService;
+
     @Override
     public String getCommandIdentifier() {
         return "login";
@@ -33,13 +36,13 @@ public class LoginCommand implements IBotCommand {
     public void processMessage(AbsSender absSender, Message message, String[] strings) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(message.getChatId().toString());
-
+        tokenBotService.saveUserToken(sendMessage.getChatId());
         if (authService.login(strings[0], strings[1])) {
             sendMessage.setText("Вы успешно вошли в аккаунт!");
             log.info("Пользователь успешно вошел в аккаунт");
         } else {
             sendMessage.setText("Пароль или логин неверный! \nПопробуйте снова");
-            log.info("Пользователь не прошел аутенфикацию");
+            log.info("Пользователь не прошел аутентификацию");
         }
         try {
             absSender.execute(sendMessage);
