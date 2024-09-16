@@ -5,6 +5,7 @@ import com.socialNetwork.TgBot.dto.AuthenticateDto;
 import com.socialNetwork.TgBot.dto.AuthenticateResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,10 +13,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthService {
 
+    private final RedisTemplate<String, String> redisTemplate;
+
     private final AuthClient authClient;
 
-    public boolean login(String email, String password) {
-        log.info("AuthServer: login: Попытка входа в аккаунт: {}, {}", email, password);
+    public boolean login(Long userId, String email, String password) {
+        log.info("AuthServer: login: Попытка входа в аккаунт: {}, {}, {}", userId, email, password);
         AuthenticateDto authenticateDto = new AuthenticateDto();
         authenticateDto.setEmail(email);
         authenticateDto.setPassword(password);
@@ -23,6 +26,7 @@ public class AuthService {
         AuthenticateResponseDto responseDto = null;
         try {
             responseDto = authClient.login(authenticateDto);
+            redisTemplate.opsForValue().set(String.valueOf(userId), responseDto.getAccessToken(), 3600000);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
@@ -30,5 +34,8 @@ public class AuthService {
         return responseDto != null;
     }
 
+    public String getToken(Long userId) {
+        return redisTemplate.opsForValue().get(String.valueOf(userId));
+    }
 
 }

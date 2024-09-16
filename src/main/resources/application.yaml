@@ -2,11 +2,24 @@ spring:
   application:
     name: TgBot
 
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
 telegram:
   bot:
     username: SocialNetwork49Bot
     token: 7344453862:AAGI8I3lxFtmxF_6S5XGtV-VaBZvCtH1axI
 
+app:
+  cache:
+    cacheType: redis
+    cache-names:
+      - userToken
+    caches:
+      userToken:
+        expiry: 30m
 
-
-
+server:
+  port: 8092

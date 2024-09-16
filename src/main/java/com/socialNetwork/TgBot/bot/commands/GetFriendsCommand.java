@@ -1,6 +1,7 @@
 package com.socialNetwork.TgBot.bot.commands;
 
 import com.socialNetwork.TgBot.service.AuthService;
+import com.socialNetwork.TgBot.service.FriendsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -10,36 +11,38 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-
 @Service
-@RequiredArgsConstructor
 @Slf4j
-public class LoginCommand implements IBotCommand {
+@RequiredArgsConstructor
+public class GetFriendsCommand implements IBotCommand {
 
     private final AuthService authService;
 
+    private final FriendsService friendsService;
+
     @Override
     public String getCommandIdentifier() {
-        return "login";
+        return "getFriends";
     }
 
     @Override
     public String getDescription() {
-        return "Login user";
+        return "Get list of friends";
     }
 
     @Override
     public void processMessage(AbsSender absSender, Message message, String[] strings) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(message.getChatId().toString());
+        Long userId = message.getFrom().getId();
 
-        if (authService.login(message.getFrom().getId(), strings[0], strings[1])) {
-            sendMessage.setText("Вы успешно вошли в аккаунт!");
-            log.info("Пользователь успешно вошел в аккаунт");
+        if (authService.getToken(userId).isEmpty()) {
+            log.info("GetFriendsCommand: Ошибка входа. Токен не найден или время жизни токена истекло.");
+            sendMessage.setText("Время сессии закончилось. Пожалуйста перезайдите в аккаунт.");
         } else {
-            sendMessage.setText("Пароль или логин неверный! \nПопробуйте снова");
-            log.info("Пользователь не прошел аутенфикацию");
+            sendMessage.setText(friendsService.getFriends(userId));
         }
+
         try {
             absSender.execute(sendMessage);
         } catch (TelegramApiException e) {
