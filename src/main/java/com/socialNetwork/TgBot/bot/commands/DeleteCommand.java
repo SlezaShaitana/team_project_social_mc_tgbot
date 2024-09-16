@@ -1,43 +1,42 @@
 package com.socialNetwork.TgBot.bot.commands;
 
+//import com.socialNetwork.TgBot.service.AccountService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import org.jvnet.hk2.annotations.Service;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.IBotCommand;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-@Service
 @Slf4j
-public class StartCommand implements IBotCommand {
+@Service
+@RequiredArgsConstructor
+public class DeleteCommand implements IBotCommand {
 
 
     @Override
     public String getCommandIdentifier() {
-        return "start";
+        return "delete";
     }
 
     @Override
     public String getDescription() {
-        return "Starts the TgBot";
+        return "Delete account";
     }
 
     @Override
     public void processMessage(AbsSender absSender, Message message, String[] strings) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(message.getChatId().toString());
-        sendMessage.setText("""
-        Приветствуем тебя в мобильной версии Code Lounge!
-        Для начала, войди в свой аккаунт.
-        Вызови команду /login
-        Для удаления account.
-        Вызови команду /delete
-        """);
+//        accountService.deleteAccount(sendMessage.getChatId());
+        sendMessage.setText("account deleted");
         try {
+            sendMessage.setText("account deleted");
             absSender.execute(sendMessage);
         } catch (TelegramApiException e) {
-            log.error("Error occurred in /start command", e);
+            throw new RuntimeException(e);
         }
     }
 }

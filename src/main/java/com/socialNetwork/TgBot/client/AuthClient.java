@@ -12,4 +12,5 @@ public interface AuthClient {
 
     @PostMapping("/login")
     AuthenticateResponseDto login(@RequestBody @Valid AuthenticateDto authenticateDto);
+
 }
