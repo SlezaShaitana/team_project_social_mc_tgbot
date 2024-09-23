@@ -18,9 +18,11 @@ public class AccountService {
 
     private final AccountClient accountClient;
 
+    private final AuthService authService;
 
-    public void deleteAccount(String userToken)
+    public void deleteAccount(Long userId)
     {
+        String userToken = "Bearer ".concat(authService.getToken(userId));
         accountClient.deleteMyAccountById(userToken);
     }
 }

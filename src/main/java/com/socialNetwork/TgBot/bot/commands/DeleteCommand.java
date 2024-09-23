@@ -38,8 +38,7 @@ public class DeleteCommand implements IBotCommand {
         sendMessage.setChatId(message.getChatId().toString());
         Long userId = message.getFrom().getId();
         if(!authService.getToken(userId).isEmpty()) {
-            String token = authService.getToken(userId);
-            accountService.deleteAccount(token);
+            accountService.deleteAccount(userId);
             sendMessage.setText("account deleted");
         }else {
             sendMessage.setText("such account does not exist to be deleted!");
