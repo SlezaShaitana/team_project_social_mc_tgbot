@@ -39,6 +39,7 @@ public class LoginCommand implements IBotCommand {
                     Вам доступен список команд:
                     /getFriends - получение списка друзей
                     /getPosts - получение списка постов
+                    /delete - удаление аккаунт
                     """);
             log.info("Пользователь успешно вошел в аккаунт");
         } else {
