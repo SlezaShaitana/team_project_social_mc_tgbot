@@ -1,7 +1,7 @@
 package com.socialNetwork.TgBot.client;
 
-import com.socialNetwork.TgBot.dto.AuthenticateDto;
-import com.socialNetwork.TgBot.dto.AuthenticateResponseDto;
+import com.socialNetwork.TgBot.dto.authDto.AuthenticateDto;
+import com.socialNetwork.TgBot.dto.authDto.AuthenticateResponseDto;
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,4 +1,4 @@
-package com.socialNetwork.TgBot.dto;
+package com.socialNetwork.TgBot.dto.firendDto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

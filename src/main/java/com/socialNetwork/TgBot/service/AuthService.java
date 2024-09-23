@@ -1,8 +1,8 @@
 package com.socialNetwork.TgBot.service;
 
 import com.socialNetwork.TgBot.client.AuthClient;
-import com.socialNetwork.TgBot.dto.AuthenticateDto;
-import com.socialNetwork.TgBot.dto.AuthenticateResponseDto;
+import com.socialNetwork.TgBot.dto.authDto.AuthenticateDto;
+import com.socialNetwork.TgBot.dto.authDto.AuthenticateResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;

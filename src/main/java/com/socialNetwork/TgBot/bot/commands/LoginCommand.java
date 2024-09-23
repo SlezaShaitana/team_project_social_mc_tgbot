@@ -34,7 +34,12 @@ public class LoginCommand implements IBotCommand {
         sendMessage.setChatId(message.getChatId().toString());
 
         if (authService.login(message.getFrom().getId(), strings[0], strings[1])) {
-            sendMessage.setText("Вы успешно вошли в аккаунт!");
+            sendMessage.setText("""
+                    Вы успешно вошли в аккаунт!
+                    Вам доступен список команд:
+                    /getFriends - получение списка друзей
+                    /getPosts - получение списка постов
+                    """);
             log.info("Пользователь успешно вошел в аккаунт");
         } else {
             sendMessage.setText("Пароль или логин неверный! \nПопробуйте снова");

@@ -3,10 +3,12 @@ package com.socialNetwork.TgBot.service;
 import com.socialNetwork.TgBot.client.AccountClient;
 import com.socialNetwork.TgBot.client.FriendsClient;
 import com.socialNetwork.TgBot.dto.accountDto.AccountMeDTO;
+import com.socialNetwork.TgBot.dto.firendDto.FriendDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,7 +23,7 @@ public class FriendsService {
 
     private final AccountClient accountClient;
 
-    public String getFriends(Long userId) {
+    public List<FriendDto> getFriends(Long userId) {
         log.info("FriendsService: getFriends: Получение друзей: {}", userId);
 
         String token = "Bearer ".concat(authService.getToken(userId));
@@ -29,15 +31,18 @@ public class FriendsService {
         return getAccountsFromService(token, friendsIds);
     }
 
-    private String getAccountsFromService(String token, List<UUID> friendsIds) {
+    private List<FriendDto> getAccountsFromService(String token, List<UUID> friendsIds) {
         log.info("FriendsService: getAccountsFromService: Получение аккаунтов друзей из микросервиса: {}, {}", token, friendsIds);
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("Список ваших друзей:").append("\n");
+        List<FriendDto> friendDtoList = new ArrayList<>();
         for (UUID id : friendsIds) {
             AccountMeDTO account = accountClient.getAccount(token, id);
-            sb.append(account.getFirstName()).append(" ").append(account.getLastName()).append("\n");
+            friendDtoList.add(FriendDto.builder()
+                            .firstName(account.getFirstName())
+                            .lastName(account.getLastName())
+                            .photoUrl(account.getPhoto())
+                    .build());
         }
-        return sb.toString();
+        return friendDtoList;
     }
 }

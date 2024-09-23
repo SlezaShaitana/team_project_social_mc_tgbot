@@ -1,4 +1,4 @@
-package com.socialNetwork.TgBot.dto;
+package com.socialNetwork.TgBot.dto.authDto;
 
 import lombok.Data;
 
