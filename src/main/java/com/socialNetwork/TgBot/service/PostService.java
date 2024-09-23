@@ -22,7 +22,7 @@ public class PostService {
         log.info("PostsService: getPosts: Получение постов аккаунта: {}", userId);
 
         String token = "Bearer ".concat(authService.getToken(userId));
-        List<PostDto> posts = postsClient.getPosts(token);
+        List<PostDto> posts = postsClient.getPosts(token, List.of(String.valueOf(userId)), 1000000000).toList();
 
         StringBuilder sb = new StringBuilder();
         sb.append("Список ваших постов:").append("\n");
