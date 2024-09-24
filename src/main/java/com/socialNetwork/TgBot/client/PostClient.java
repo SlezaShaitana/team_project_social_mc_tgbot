@@ -14,6 +14,6 @@ public interface PostClient {
 
     @GetMapping("/post")
     Page<PostDto> getPosts(@RequestHeader("Authorization") String bearerToken,
-                           @RequestParam List<String> accountIds,
+                           @RequestParam String accountIds,
                            @RequestParam Integer size);
 }

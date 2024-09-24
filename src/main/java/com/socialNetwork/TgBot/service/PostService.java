@@ -18,26 +18,18 @@ public class PostService {
     private final PostClient postsClient;
 
 
-    public String getPosts(Long userId) {
+    public List<PostDto> getPosts(Long userId) {
         log.info("PostsService: getPosts: Получение постов аккаунта: {}", userId);
 
-        String token = "Bearer ".concat(authService.getToken(userId));
-        List<PostDto> posts = postsClient.getPosts(token, List.of(String.valueOf(userId)), 1000000000).toList();
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("Список ваших постов:").append("\n");
-        int numberPost = 1;
-        for (PostDto post : posts) {
-            sb.append(" " + numberPost++ + ")").append("\n").append("  Заголовок: " + post.getTitle() + "\n")
-                    .append("  Количество комментариев: " + post.getCommentsCount() + "\n")
-                    .append("  Количество лайков: " + post.getLikeAmount() + "\n");
-            if (post.getType().equals(TypePost.POSTED)){
-                sb.append("  Тип: Опубликованный");
-            }
-            if (post.getType().equals(TypePost.QUEUED)){
-                sb.append("  Тип: Отложенный").append("  Дата и время публикации: " + post.getPublishDate());
-            }
+        try {
+            String token = "Bearer ".concat(authService.getToken(userId));
+            String accountId = DecodedToken.getDecoded(token).getId();
+            List<PostDto> posts = postsClient.getPosts(token, accountId, 1000000000).toList();
+            log.info("Запрос к mc-post выполнен успешно! Список постов получен");
+            return posts;
+        }catch (Exception e){
+            log.error("Результат получения постов: Error: {}", e.getMessage());
+            return List.of();
         }
-        return sb.toString();
     }
 }
